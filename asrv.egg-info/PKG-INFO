@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: asrv
+Version: 0.0.0
+Summary: My lib
+Home-page: UNKNOWN
+Author: Yulia
+Author-email: admin@google.com
+License: 'Some license's text'
+Platform: UNKNOWN
+Classifier: Framework :: AnyIO
+Classifier: Framework :: Django :: 2
+Classifier: Development Status :: 5 Production/Stable
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# SUPER LIB
+
+## async site
+
+config file:
+`/etc/hosts`
+```python
+from asrv import app
+
+app.run()
+```
+
