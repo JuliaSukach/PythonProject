@@ -1,8 +1,12 @@
 import asyncio
+import json
 from functools import partial
+import python_http_parser
+import python_http_parser as http_parser
 from contextlib import asynccontextmanager
 from argparse import ArgumentParser
 from datetime import date
+from asrv.web.root import urls
 
 
 def get_args():
@@ -47,7 +51,21 @@ async def stst2(app):
 
 
 class Controller(asyncio.Protocol):
-    ...
+    def connection_made(self, transport) -> None:
+        self.transport = transport
+
+    def data_received(self, data: bytes) -> None:
+        print('#' * 100)
+        print(data.decode('utf-8'))
+        req = http_parser.parse(data)
+        print(dir(req))
+        print(json.dumps(dict(req), indent=4))
+        for url in urls.urlpatterns:
+            if url[0] == req['req_uri']:
+                res = url[1](req)
+                self.transport.write(res)
+        self.transport.write(b'response')
+        self.transport.close()
 
 
 class Server:
